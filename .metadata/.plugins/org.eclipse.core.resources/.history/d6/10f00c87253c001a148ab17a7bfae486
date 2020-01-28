@@ -1,0 +1,56 @@
+package servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
+import dao.Dao;
+import helper.Helper;
+import model.Asiakas;
+
+@WebServlet("/HaeAsiakas")
+public class HaeAsiakas extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    
+    public HaeAsiakas() {
+        super();  
+        System.out.println("HaeAsiakas.HaeAsiakas()");
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("HaeAsiakas.doGet()");
+		//Muutettavan auton tietojen haku
+		System.out.println(request);
+		
+		Helper helper = new Helper();
+		String tiedot = helper.naytaMuuttujaArvoparit(request);
+		PrintWriter out = response.getWriter();
+	    response.setContentType("text/html"); 		
+	    out.println(tiedot);
+				
+		int asiakas_id = 1;//Integer.parseInt(request.getParameter("asiakas_id"));	
+		Dao dao = new Dao();		
+		Asiakas asiakas = dao.etsiAsiakas(asiakas_id);
+		JSONObject JSON = new JSONObject();
+		JSON.put("asiakas_id", asiakas.getAsiakas_id());
+		JSON.put("etunimi", asiakas.getEtunimi());
+		JSON.put("sukunimi", asiakas.getSukunimi());
+		JSON.put("puhelin", asiakas.getPuhelin());	
+		JSON.put("sposti", asiakas.getSposti());	
+		String strJSON = JSON.toString();		
+		//PrintWriter out = response.getWriter(  );
+	    //response.setContentType("text/html"); 
+	    out.println(strJSON);		
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("HaeAsiakas.doPost()");
+	}
+}

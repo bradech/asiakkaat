@@ -1,0 +1,7 @@
+INDEX VERSION 1.131
+C:\Users\christian.brade\Desktop\Ohjelmointi II\Etatehtavat_5\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\227751840.index
+\Etatehtavat_5\src
+C:\Users\christian.brade\Desktop\Ohjelmointi II\Etatehtavat_5\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2227365281.index
+\Etatehtavat_5\src
+C:\Users\christian.brade\Desktop\Ohjelmointi II\Asiakkaat\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2993656568.index
+\Asiakkaat\src

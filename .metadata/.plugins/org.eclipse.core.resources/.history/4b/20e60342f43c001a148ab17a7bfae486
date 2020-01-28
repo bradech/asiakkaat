@@ -1,0 +1,74 @@
+package servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
+import dao.Dao;
+import model.Asiakas;
+
+
+@WebServlet("/asiakkaat/*")
+public class Asiakkaat extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+   
+    public Asiakkaat() {
+        super();
+        
+    }
+
+    
+ 	// GET/asiakkaat/haeyksi/{id}
+ 	// GET/asiakkaat/haemonta/hakusana 	    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Asiakkaat.doGet()");
+		String pathInfo = request.getPathInfo();	//haetaan kutsun tiedot			
+		System.out.println(pathInfo);
+		String hakusana="";
+		if(pathInfo!=null && !pathInfo.equals("/")) { //jos tietoja on tulossa kutsun mukana
+			hakusana = pathInfo.split("/")[1];			
+		}
+		Dao dao = new Dao();
+		ArrayList<Asiakas> asiakkaat = dao.listaaKaikki(hakusana);
+		String strJSON = new JSONObject().put("asiakkaat", asiakkaat).toString();	
+		response.setContentType("application/json");	
+		response.getWriter().println(strJSON); 	    
+	}
+
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Asiakkaat.doPost()");
+	}
+
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Asiakkaat.doPut()");
+	}
+
+	// DELETE/asiakkaat/id 	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Asiakkaat.doDelete()");
+		String pathInfo = request.getPathInfo();	//haetaan kutsun tiedot		
+		if(pathInfo!=null && !pathInfo.equals("/")) { //jos tietoja on tulossa kutsun mukana
+			int asiakas_id = Integer.parseInt(pathInfo.split("/")[1]);	
+			Dao dao = new Dao();
+			response.setContentType("application/json"); 
+			PrintWriter out = response.getWriter();		    
+			if(dao.poistaAsiakas(asiakas_id)){
+				out.println(1); //Asiakkaan poisto onnistui
+			}else {
+				out.println(0); //Asiakkaan poisto epäonnistui
+			}
+		}
+	}
+
+}
