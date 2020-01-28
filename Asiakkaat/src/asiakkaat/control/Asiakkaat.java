@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import asiakkaat.model.Asiakas;
 import asiakkaat.model.dao.Dao;
 
-//REST-metodeita asiakastiedojen hallintaan. 
+//REST-metodeja asiakastiedojen hallintaan. 
 @WebServlet("/asiakkaat/*")
 public class Asiakkaat extends HttpServlet {
 	private static final long serialVersionUID = 1L;       
